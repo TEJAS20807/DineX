@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Baloo 2", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --color-flame: #E4572E;
+  --color-flame-dark: #C43D1C;
+  --color-mustard: #FFC145;
+  --color-cream: #FFF9F0;
+  --color-ink: #2B1B0E;
+  --color-success: #3A7D44;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+}
+@keyframes scan-line {
+  0% {
+    top: 8%;
+  }
+  50% {
+    top: 85%;
+  }
+  100% {
+    top: 8%;
+  }
+}
+
+.scanner-line {
+  animation: scan-line 1.6s ease-in-out infinite;
+}
