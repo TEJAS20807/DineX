@@ -75,7 +75,10 @@ function MenuManager() {
     });
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, name) => {
+    const confirmDelete = window.confirm(`Delete "${name}"? This cannot be undone.`);
+    if (!confirmDelete) return;
+
     await deleteMenuItem(id);
     toast.success("Item deleted");
     fetchMenu();
@@ -201,7 +204,7 @@ function MenuManager() {
                 </div>
               </div>
               <button
-                onClick={() => handleDelete(item.id)}
+                onClick={() => handleDelete(item.id, item.name)}
                 className="text-flame text-sm font-semibold hover:underline"
               >
                 Delete
