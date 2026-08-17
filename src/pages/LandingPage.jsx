@@ -3,10 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import ScannerIcon from "../components/ScannerIcon";
 
 function LandingPage() {
+  const [showTableInput, setShowTableInput] = useState(false);
   const [tableNumber, setTableNumber] = useState("");
   const navigate = useNavigate();
 
-  const handleCustomerEntry = () => {
+  const handleGoToMenu = () => {
     if (!tableNumber) {
       alert("Please enter a table number");
       return;
@@ -25,24 +26,35 @@ function LandingPage() {
       <p className="text-cream/60 mb-10">Scan. Order. Enjoy.</p>
 
       <div className="w-full max-w-sm space-y-4">
-        <div className="bg-white rounded-2xl p-4 shadow-md">
-          <label className="block text-xs font-semibold text-ink/50 mb-2">
-            Enter your table number
-          </label>
-          <input
-            type="number"
-            placeholder="e.g. 5"
-            value={tableNumber}
-            onChange={(e) => setTableNumber(e.target.value)}
-            className="w-full border border-black/10 rounded-xl px-4 py-2.5 mb-3 focus:outline-none focus:ring-2 focus:ring-flame/50"
-          />
+        {/* Customer button - reveals table input when clicked */}
+        {!showTableInput ? (
           <button
-            onClick={handleCustomerEntry}
-            className="w-full bg-flame text-white font-display font-bold py-3 rounded-xl hover:bg-flame-dark transition"
+            onClick={() => setShowTableInput(true)}
+            className="block w-full bg-flame text-white text-center font-display font-bold text-lg py-4 rounded-2xl shadow-md hover:bg-flame-dark transition"
           >
-            View Menu
+            I'm a Customer
           </button>
-        </div>
+        ) : (
+          <div className="bg-white rounded-2xl p-4 shadow-md">
+            <label className="block text-xs font-semibold text-ink/50 mb-2">
+              Enter your table number
+            </label>
+            <input
+              type="number"
+              placeholder="e.g. 5"
+              value={tableNumber}
+              onChange={(e) => setTableNumber(e.target.value)}
+              autoFocus
+              className="w-full border border-black/10 rounded-xl px-4 py-2.5 mb-3 focus:outline-none focus:ring-2 focus:ring-flame/50"
+            />
+            <button
+              onClick={handleGoToMenu}
+              className="w-full bg-flame text-white font-display font-bold py-3 rounded-xl hover:bg-flame-dark transition"
+            >
+              View Menu
+            </button>
+          </div>
+        )}
 
         <Link
           to="/staff/login"
@@ -60,7 +72,7 @@ function LandingPage() {
       </div>
 
       <p className="text-cream/30 text-xs mt-10">
-        Normally, customers reach the menu by scanning their table's QR code — this page is just a fallback.
+        Normally, customers reach the menu by scanning their table's QR code — this button is just a fallback.
       </p>
     </div>
   );
