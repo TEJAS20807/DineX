@@ -20,7 +20,6 @@ function MenuManager() {
     fetchMenu();
   }, []);
 
-  // Add a single dish using the form
   const handleAdd = async (e) => {
     e.preventDefault();
     if (!name || !category || !price) {
@@ -35,9 +34,6 @@ function MenuManager() {
     fetchMenu();
   };
 
-  // Reads a CSV file (Name, Category, Price, Type columns)
-  // and adds every row as a menu item — used for adding
-  // a full menu at once instead of typing one by one.
   const handleCSVUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -75,16 +71,17 @@ function MenuManager() {
     });
   };
 
+  // Deletes ONE item, but asks for confirmation first
   const handleDelete = async (id, name) => {
     const confirmDelete = window.confirm(`Delete "${name}"? This cannot be undone.`);
-    if (!confirmDelete) return;
-
+    if (!confirmDelete) {
+      return; // stop here if user clicked Cancel
+    }
     await deleteMenuItem(id);
     toast.success("Item deleted");
     fetchMenu();
   };
 
-  // Deletes every item in the menu, one by one (with a confirmation popup)
   const handleClearAll = async () => {
     const confirmClear = window.confirm(
       "This will delete ALL menu items. Are you sure?"
@@ -117,7 +114,6 @@ function MenuManager() {
           )}
         </div>
 
-        {/* CSV Upload - fastest way to add a full menu */}
         <div className="bg-white rounded-2xl shadow-sm border border-black/5 p-5 mb-6">
           <h2 className="font-display font-bold text-ink mb-1">
             Upload Menu (CSV)
@@ -133,7 +129,6 @@ function MenuManager() {
           />
         </div>
 
-        {/* Single item form - useful for quick edits */}
         <div className="bg-white rounded-2xl shadow-sm border border-black/5 p-5 mb-6">
           <h2 className="font-display font-bold text-ink mb-3">
             Add a Single Dish
@@ -177,7 +172,6 @@ function MenuManager() {
           </form>
         </div>
 
-        {/* Current menu list */}
         <div className="space-y-2">
           {menu.map((item) => (
             <div
