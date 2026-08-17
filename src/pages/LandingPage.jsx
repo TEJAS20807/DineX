@@ -1,7 +1,19 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import ScannerIcon from "../components/ScannerIcon";
 
 function LandingPage() {
+  const [tableNumber, setTableNumber] = useState("");
+  const navigate = useNavigate();
+
+  const handleCustomerEntry = () => {
+    if (!tableNumber) {
+      alert("Please enter a table number");
+      return;
+    }
+    navigate(`/menu/${tableNumber}`);
+  };
+
   return (
     <div className="min-h-screen bg-ink flex flex-col items-center justify-center px-4">
       <div className="flex items-center gap-3 mb-2">
@@ -13,12 +25,24 @@ function LandingPage() {
       <p className="text-cream/60 mb-10">Scan. Order. Enjoy.</p>
 
       <div className="w-full max-w-sm space-y-4">
-        <Link
-          to="/menu/1"
-          className="block bg-flame text-white text-center font-display font-bold text-lg py-4 rounded-2xl shadow-md hover:bg-flame-dark transition"
-        >
-          I'm a Customer
-        </Link>
+        <div className="bg-white rounded-2xl p-4 shadow-md">
+          <label className="block text-xs font-semibold text-ink/50 mb-2">
+            Enter your table number
+          </label>
+          <input
+            type="number"
+            placeholder="e.g. 5"
+            value={tableNumber}
+            onChange={(e) => setTableNumber(e.target.value)}
+            className="w-full border border-black/10 rounded-xl px-4 py-2.5 mb-3 focus:outline-none focus:ring-2 focus:ring-flame/50"
+          />
+          <button
+            onClick={handleCustomerEntry}
+            className="w-full bg-flame text-white font-display font-bold py-3 rounded-xl hover:bg-flame-dark transition"
+          >
+            View Menu
+          </button>
+        </div>
 
         <Link
           to="/staff/login"
@@ -36,7 +60,7 @@ function LandingPage() {
       </div>
 
       <p className="text-cream/30 text-xs mt-10">
-        Customers normally reach the menu by scanning a table's QR code.
+        Normally, customers reach the menu by scanning their table's QR code — this page is just a fallback.
       </p>
     </div>
   );
